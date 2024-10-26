@@ -12,7 +12,6 @@ public class Kirja implements Comparable<Kirja>{
         this.nimi = nimi;
         this.kirjailija = kirjailija;
         this.varasto_kpl = varasto_kpl;
-
     }
 
     public String getIsbn() {
@@ -23,33 +22,12 @@ public class Kirja implements Comparable<Kirja>{
         return nimi;
     }
 
-    public void setNimi(String nimi) {
-        this.nimi = nimi;
-    }
-
     public String getKirjailija() {
         return kirjailija;
     }
 
-    public void setKirjailija(String kirjailija) {
-        this.kirjailija = kirjailija;
-    }
-
     public int getVarasto_kpl() {
         return varasto_kpl;
-    }
-
-    public void lisaaVarasto_kpl(int maara) {
-        this.varasto_kpl += maara;
-    }
-
-    public boolean reduceVarasto_kpl(int maara){
-        if (this.varasto_kpl >= maara) {
-            this.varasto_kpl -= maara;
-            return true;
-        }
-        return false;
-
     }
 
     @Override
@@ -60,7 +38,5 @@ public class Kirja implements Comparable<Kirja>{
     @Override
     public String toString() {
         return "ISBN: " + isbn + ", Nimi: " + nimi + ", Kirjailija: " + kirjailija + ",Varasto: " + varasto_kpl;
-
     }
-
 }

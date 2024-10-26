@@ -54,7 +54,6 @@ public class KirjakauppaDB {
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, isbn);
             ResultSet rs = stmt.executeQuery();
-
             if (rs.next()) {
                 Kirja kirja = new Kirja(
                         rs.getString("isbn"),
@@ -62,7 +61,6 @@ public class KirjakauppaDB {
                         rs.getString("kirjailija"),
                         rs.getInt("varasto_kpl")
                 );
-                System.out.println(kirja);
                 return kirja;
             } else {
                 System.out.println("Mikään kirjaa ei löytyny kyseisellä ISBN:llä: ");
@@ -84,6 +82,23 @@ public class KirjakauppaDB {
             stmt.setString(2, sukunimi);
             stmt.executeUpdate();
             System.out.println("Asiakas lisätty tietokantaan.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void poistaAsiakas(int asiakasId) {
+        String query = "DELETE FROM Asiakkaat WHERE id = ?";
+
+        try (Connection conn = dbConn.connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, asiakasId);
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Asiakasta poistettu onnistuneesti!");
+            } else {
+                System.out.println("Asiakasta ei löytynyt ID:llä " + asiakasId);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -114,7 +129,7 @@ public class KirjakauppaDB {
                     }
                 }
             } else {
-                System.out.println("Customer not found.");
+                System.out.println("Asiakas ei löytynyt");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -168,7 +183,6 @@ public class KirjakauppaDB {
                 String sukunimi = rs.getString("sukunimi");
                 Asiakas asiakas = new Asiakas(asiakasId, etunimi, sukunimi);
 
-                // Optionally retrieve and add the purchase history for each customer
                 String historyQuery = "SELECT kirja_isbn FROM ostotapahtumat WHERE asiakas_id = ?";
                 try (PreparedStatement historyStmt = conn.prepareStatement(historyQuery)) {
                     historyStmt.setInt(1, asiakasId);
@@ -196,9 +210,9 @@ public class KirjakauppaDB {
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, varasto_kpl);
             stmt.setString(2, isbn);
-            stmt.setInt(3, varasto_kpl); // Ensure there's enough stock
+            stmt.setInt(3, varasto_kpl);
             int affectedRows = stmt.executeUpdate();
-            return affectedRows > 0; // Return true if the update succeeded
+            return affectedRows > 0;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -219,12 +233,11 @@ public class KirjakauppaDB {
                 String author = rs.getString("kirjailija");
                 int varasto_kpl = rs.getInt("varasto_kpl");
 
-                // Assuming you have a Book class
                 Kirja kirja = new Kirja(isbn, title, author, varasto_kpl);
                 sortedBooks.add(kirja);
             }
             for (Kirja kirja : sortedBooks) {
-                System.out.printf("Title: %s | Author: %s | ISBN: %s | Stock: %d\n",
+                System.out.printf("Nimi: %s | Kirjailija: %s | ISBN: %s | Varasto: %d\n",
                         kirja.getNimi(), kirja.getKirjailija(), kirja.getIsbn(), kirja.getVarasto_kpl());
             }
 

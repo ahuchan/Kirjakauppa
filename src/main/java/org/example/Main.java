@@ -75,13 +75,13 @@ public class Main {
                     if (asiakas != null) {
                         System.out.println(asiakas);
                     } else {
-                        System.out.println("Asiakas ei löydy");
+                        System.out.println("Asiakasta ei löydy");
                     }
                     break;
                 case 7:
                     System.out.println("Syötä asiakkaan ID:");
                     asiakasId = scanner.nextInt();
-                    kirjakauppa.poistaAsiakas(asiakasId);
+                    kirjakauppa.getKirjakauppaDB().poistaAsiakas(asiakasId);
                     break;
                 case 8:
                     System.out.println("Syötä asiakkaan ID:");

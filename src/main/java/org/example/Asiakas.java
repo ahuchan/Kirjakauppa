@@ -18,24 +18,8 @@ public class Asiakas {
         this.ostoHistoria = new ArrayList<>();
     }
 
-    public int getAsiakasId() {
-        return asiakasId;
-    }
-
-    public String getEtunimi() {
-        return etunimi;
-    }
-
-    public String getSukunimi() {
-        return sukunimi;
-    }
-
     public void lisaaOstotapahtuma(String kirjaInfo) {
         ostoHistoria.add(kirjaInfo);
-    }
-
-    public List<String> getOstoHistoria() {
-        return ostoHistoria;
     }
 
     @Override
