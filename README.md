@@ -33,26 +33,27 @@ JDBC: Yhteys tietokantaan
 
     Lisää seuraavat pöydät omaan tietokantaan:
 
-   CREATE TABLE kirjat (
-   isbn VARCHAR(20) PRIMARY KEY,
-   nimi VARCHAR(100),
-   kirjailija VARCHAR(100),
-   varasto_kpl INT
-   );
-
-    CREATE TABLE asiakkaat (
-    id VARCHAR(6) PRIMARY KEY,
-    etunimi VARCHAR(50),
-    sukunimi VARCHAR(50)
+   CREATE TABLE kirjat ( \
+   isbn VARCHAR(20) PRIMARY KEY, \
+   nimi VARCHAR(100), \
+   kirjailija VARCHAR(100), \
+   varasto_kpl INT \
+   ); \
+   \
+    CREATE TABLE asiakkaat ( \
+    id VARCHAR(6) PRIMARY KEY, \
+    etunimi VARCHAR(50), \
+    sukunimi VARCHAR(50) \
+    ); \
+   \
+    CREATE TABLE ostotapahtumat ( \
+    asiakas_id VARCHAR(6), \
+    kirja_isbn VARCHAR(20), \
+    FOREIGN KEY (asiakas_id) REFERENCES asiakkaat(id), \
+    FOREIGN KEY (kirja_isbn) REFERENCES kirjat(isbn) \
     );
-    
-    CREATE TABLE ostotapahtumat (
-    asiakas_id VARCHAR(6),
-    kirja_isbn VARCHAR(20),
-    FOREIGN KEY (asiakas_id) REFERENCES asiakkaat(id),
-    FOREIGN KEY (kirja_isbn) REFERENCES kirjat(isbn)
-    );
 
+   
 3. Kloonaus:
 
    git clone https://github.com/ahuchan/kirjakauppa.git
